@@ -31,11 +31,11 @@
     "@types/pixelmatch": "^5.2.1",
     "@types/pngjs": "^3.4.2",
     "@types/puppeteer-core": "^2.0.0",
-    "esbuild": "^0.15.6",
     "prettier": "^2.0.5",
     "typescript": "^3.9.5"
   },
   "dependencies": {
+    "esbuild": "^0.15.6",
     "cac": "^6.5.10",
     "chalk": "^4.1.0",
     "debug": "^4.1.1",
