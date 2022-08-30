@@ -8,6 +8,7 @@ import { onlyRelease, release } from "./release";
 import { releaseNpm } from "./release-npm";
 import semver from "semver";
 import { clean } from "./clean";
+import { watch } from "./watch";
 
 const cli = require("cac")();
 const pkg = require("../package.json");
@@ -52,6 +53,10 @@ cli
         console.error(e);
       });
   });
+
+cli.command("watch", "fast watch oasis").action(() => {
+  watch();
+});
 
 cli.command("release", "release oasis").action(() => {
   release();
