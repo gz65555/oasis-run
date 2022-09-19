@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 const path = require("path");
 const fs = require("fs");
 const execa = require("execa");
@@ -5,13 +7,15 @@ const os = require("os");
 
 const CPU_LEN = os.cpus().length;
 
-async function execCMD(cmdText: string, options: string[], cwd: string) {
-  console.log(`exec ${cmdText} in ${cwd}`);
+export async function execCMD(cmdText: string, options: string[], cwd: string) {
+  const commandText = chalk.blue(`${cmdText} ${options.join(" ")}`);
+  console.log(`exec ${commandText}`);
   let output;
   try {
     const { stdout } = await execa(cmdText, options, { cwd });
     output = stdout;
     console.log(`finish exec ${cmdText} in ${cwd}: ${output}`);
+    return output;
   } catch (e) {
     console.log(e);
   }
