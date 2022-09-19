@@ -52,9 +52,11 @@ export async function release() {
 
   await commitAndTagUpdates(files, version, cwd);
 
-  await gitPushToRemote(cwd);
+  const currentBranch = await execCMD("git", ["rev-parse", "--abbrev-ref", "HEAD"], cwd);
 
-  divideExec("pnpm", ["publish", "--tag", tag], basePackagePath);
+  await gitPushToRemote(currentBranch, cwd);
+
+  divideExec("pnpm", ["publish", "--tag", tag, "--publish-branch", currentBranch], basePackagePath);
 }
 
 export async function onlyRelease() {
@@ -140,8 +142,7 @@ async function commitAndTagUpdates(files: string[], version: string, cwd: string
   await execCMD("git", ["tag", `v${version}`, "-m", `v${version}`], cwd);
 }
 
-async function gitPushToRemote(cwd: string) {
-  const currentBranch = await execCMD("git", ["rev-parse", "--abbrev-ref", "HEAD"], cwd);
+async function gitPushToRemote(currentBranch: string, cwd: string) {
   const remote = "origin";
   await execCMD("git", ["push", remote, currentBranch], cwd);
 }
