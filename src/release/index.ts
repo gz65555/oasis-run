@@ -137,9 +137,11 @@ async function updatePackageVersions(version: string, dirs: string[]) {
 }
 
 async function commitAndTagUpdates(files: string[], version: string, cwd: string) {
+  const tag = `v${version}`;
   await execCMD("git", ["add", ...files.map((file) => path.relative(cwd, file))], cwd);
-  await execCMD("git", ["commit", "-m", `"v${version}"`, "--no-verify"], cwd);
-  await execCMD("git", ["tag", `v${version}`, "-m", `v${version}`], cwd);
+  await execCMD("git", ["commit", "-m", `"${tag}"`, "--no-verify"], cwd);
+  await execCMD("git", ["tag", tag, "-m", tag], cwd);
+  await execCMD("git", ["push", "origin", tag], cwd);
 }
 
 async function gitPushToRemote(currentBranch: string, cwd: string) {
