@@ -36,6 +36,7 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
+    "@types/execa": "^2.0.0",
     "cac": "^6.5.10",
     "chalk": "^4.1.0",
     "debug": "^4.1.1",

@@ -2,8 +2,8 @@ import chalk from "chalk";
 
 const path = require("path");
 const fs = require("fs");
-const execa = require("execa");
 const os = require("os");
+import execa from "execa";
 
 const CPU_LEN = os.cpus().length;
 

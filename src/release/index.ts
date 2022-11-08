@@ -43,12 +43,12 @@ export async function release() {
   const tag = await queryTag();
   const version = await queryVersion(currentVersion, tag);
 
-  await buildPackage(cwd);
-
   const files = await updatePackageVersions(
     version,
     dirs.map((dir) => path.join(basePackagePath, dir))
   );
+  
+  await buildPackage(cwd);
 
   await commitAndTagUpdates(files, version, cwd);
 
