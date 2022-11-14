@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "tsc -w",
-    "build": "tsc && rm -rf dist/common/.oasis"
+    "build": "tsc && rm -rf dist/common/.oasis",
+    "prepublish": "npm run build"
   },
   "bin": {
     "oar": "bin/cli"
