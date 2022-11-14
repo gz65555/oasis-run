@@ -11,14 +11,10 @@ export async function execCMD(cmdText: string, options: string[], cwd: string, u
   const commandText = chalk.blue(`${cmdText} ${options.join(" ")}`);
   console.log(`exec ${commandText}`);
   let output;
-  try {
-    const { stdout } = await execa(cmdText, options, { cwd, stdio: useOriginLog ? "inherit" : undefined });
-    output = stdout;
-    console.log(`finish exec ${cmdText} in ${cwd}: ${output}`);
-    return output;
-  } catch (e) {
-    console.log(e);
-  }
+  const { stdout } = await execa(cmdText, options, { cwd, stdio: useOriginLog ? "inherit" : undefined });
+  output = stdout;
+  console.log(`finish exec ${cmdText} in ${cwd}: ${output}`);
+  return output;
 }
 
 export async function divideExec(cmd: string, options: string[], basePackagePath: string) {
