@@ -7,12 +7,12 @@ import execa from "execa";
 
 const CPU_LEN = os.cpus().length;
 
-export async function execCMD(cmdText: string, options: string[], cwd: string) {
+export async function execCMD(cmdText: string, options: string[], cwd: string, useOriginLog = false) {
   const commandText = chalk.blue(`${cmdText} ${options.join(" ")}`);
   console.log(`exec ${commandText}`);
   let output;
   try {
-    const { stdout } = await execa(cmdText, options, { cwd });
+    const { stdout } = await execa(cmdText, options, { cwd, stdio: useOriginLog ? "inherit" : undefined });
     output = stdout;
     console.log(`finish exec ${cmdText} in ${cwd}: ${output}`);
     return output;

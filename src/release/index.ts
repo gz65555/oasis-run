@@ -1,9 +1,9 @@
 import path from "path";
 import fs from "fs-extra";
-import inquirer from "inquirer";
 import { divideExec, execCMD } from "../common/exec";
 import { spawn } from "child_process";
 import * as semver from "semver";
+import inquirer from "inquirer";
 import chalk from "chalk";
 
 function buildPackage(cwd: string) {
