@@ -29,7 +29,7 @@ export async function releaseEditor(tag?: string) {
 
   await gitPushToRemote(currentBranch, cwd);
 
-  await execCMD("tnpm", ["publish", "--tag", tag], editorDir, true);
+  await execCMD("npm", ["publish", "--tag", tag], editorDir, true);
 
   console.log(`open https://yuyan.antfin-inc.com/lib/version?name=%40alipay%2Foasis-editor-pages to publish cdn url`);
   console.log(`open https://github.com/ant-galaxy/editor/releases/new to generate release log`);
