@@ -35,5 +35,5 @@ export async function releaseEditor(tag?: string) {
   console.log(`open https://github.com/ant-galaxy/editor/releases/new to generate release log`);
 }
 async function buildPackage(cwd: string) {
-  await execCMD("yarn", ["workspace", "@alipay/oasis-editor-pages", "build"], cwd, true);
+  await execCMD("yarn", ["workspace", "@oasis-editor/pages", "build"], cwd, true);
 }
