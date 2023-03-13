@@ -31,7 +31,8 @@ export async function releaseEditor(tag?: string) {
 
   await execCMD("npm", ["publish", "--tag", tag], editorDir, true);
 
-  console.log(`open https://yuyan.antfin-inc.com/lib/version?name=%40alipay%2Foasis-editor-pages to publish cdn url`);
+  console.log(`open https://yuyan.antfin-inc.com/lib/version?name=%40oasis-editor%2Fpages to publish cdn url`);
+  console.log(`open https://yuyan.antfin-inc.com/app/180020010201206696/configItem/sprints?env=online to config version`);
   console.log(`open https://github.com/ant-galaxy/editor/releases/new to generate release log`);
 }
 async function buildPackage(cwd: string) {
