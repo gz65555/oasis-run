@@ -83,6 +83,18 @@ export async function updatePackageVersions(version: string, dirs: string[]) {
   );
 }
 
+export async function updateDependenciesVersion(name: string, version: string, dirs: string[]) {
+  return Promise.all(
+    dirs.map(async (dir) => {
+      const pkgPath = path.join(dir, "package.json");
+      const pkgContent = await fs.readJSON(pkgPath, { encoding: "utf-8" });
+      pkgContent.dependencies[name] = version;
+      await fs.writeJSON(pkgPath, pkgContent, { spaces: 2 });
+      return pkgPath;
+    })
+  );
+}
+
 export async function gitPushToRemote(currentBranch: string, cwd: string) {
   const remote = "origin";
   await execCMD("git", ["push", remote, currentBranch], cwd);
