@@ -20,6 +20,11 @@ export async function releaseEditor(tag?: string) {
     console.log(chalk.red("错误：不是编辑器目录"));
     process.exit(1);
   }
+
+  const rootPackageJSON = require(path.join(cwd, "package.json"));
+
+  const isPnpm = (rootPackageJSON.packageManager as string).startsWith("pnpm");
+
   const currentVersion = require(path.join(editorDir, "package.json")).version;
   if (!tag) {
     tag = await queryTag();
@@ -28,19 +33,19 @@ export async function releaseEditor(tag?: string) {
 
   const files = await updatePackageVersions(version, [editorDir]);
 
-  const updatedFiles = await updateDependenciesVersion("@oasis-editor/pages", version, [
-    path.join(cwd, "apps", "editor-app")
-  ]);
+  // const updatedFiles = await updateDependenciesVersion("@oasis-editor/pages", version, [
+  //   path.join(cwd, "apps", "editor-app")
+  // ]);
 
   await buildPackage(cwd);
 
-  await commitAndTagUpdates([...files, ...updatedFiles], version, cwd);
+  await commitAndTagUpdates([...files], version, cwd);
 
   const currentBranch = await execCMD("git", ["rev-parse", "--abbrev-ref", "HEAD"], cwd);
 
   await gitPushToRemote(currentBranch, cwd);
 
-  await execCMD("npm", ["publish", "--tag", tag], editorDir, true);
+  await execCMD("pnpm", ["publish", "--tag", tag], editorDir, true);
 
   await execCMD("tnpm", ["sync", "@oasis-editor/pages"], cwd, true);
 
@@ -51,5 +56,5 @@ export async function releaseEditor(tag?: string) {
   console.log(`open https://github.com/ant-galaxy/editor/releases/new to generate release log`);
 }
 async function buildPackage(cwd: string) {
-  await execCMD("yarn", ["build"], cwd, true);
+  await execCMD("pnpm", ["run", "build"], cwd, true);
 }
